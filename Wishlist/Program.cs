@@ -7,7 +7,7 @@ class Program
     static void Main(string[] args)
     {
         List<IItem> items = new List<IItem>();
-        Book book = new Book();
+        BookItem book = new BookItem();
         book.Id = 1;
         book.Name = "The Alchemist";
         book.Author = "Paulo Coelho";
@@ -39,238 +39,188 @@ class Program
             {
                 menuSelection = int.Parse(readResult.ToLower());
             }
-
-            switch (menuSelection)
+            do
             {
-                case 1:
-                    foreach(var item in items)
-                    {
-                        item.GetItemDetails();
-                    }
-                    Console.WriteLine("\n\rPress the Enter key to continue");
-                    readResult = Console.ReadLine();
-
-                    break;
-
-                case 2:
-                    string anotherItem = "y";
-                    
-                    while (anotherItem == "y" && items.Count < itemsMax)
-                    {
-                        bool validEntry = false;
-
-                        do
+                switch (menuSelection)
+                {
+                    case 1:
+                        foreach (var item in items)
                         {
-                            Console.WriteLine("\n\rEnter 'category' or 'cat' to begin a new entry");
-                            readResult = Console.ReadLine();
-                            string? input = readResult;
-                            if (readResult != null)
-                            {
-                                input = readResult.ToLower();
-                                if (input != "category" || input != "cat")
-                                {
-                                    Console.WriteLine($"You entered: {input}.");
-                                    validEntry = false;
-                                }
-                                else
-                                {
-                                    validEntry = true;
-                                }
-                            }
-                        } while (validEntry == false);
+                            item.GetItemDetails();
+                        }
+                        Console.WriteLine("\n\rPress the Enter key to continue");
+                        readResult = Console.ReadLine();
 
-                        
-                        do
+                        break;
+
+                    case 2:
+                        string addAnotherItem = "y";
+
+                        while (addAnotherItem == "y" && items.Count < itemsMax)
                         {
-                            string? category;
-                            Console.WriteLine("Enter categoty\n- el(for electronic)\n- c(for clothes)\n - b(for books) or enter 'n' if not necessary");
-                            readResult = Console.ReadLine();
-                            if (readResult != null)
-                            {
-                                category = readResult;
-                                if (category != "n")
-                                {
-                                    switch (category)
-                                    {
-                                        case "el":
-                                            Console.WriteLine("Enter the name of the electronic");
-                                            readResult = Console.ReadLine();
-                                            if (readResult != null)
-                                            {
-                                                string? electronicName = readResult;
-                                                Console.WriteLine("Enter the price of the electronic");
-                                                readResult = Console.ReadLine();
-                                                if (readResult != null)
-                                                {
-                                                    decimal electronicPrice = decimal.Parse(readResult);
-                                                    ElectronicItem electronicItem = new ElectronicItem();
-                                                    electronicItem.Id = items.Count + 1;
-                                                    electronicItem.Name = electronicName;
-                                                    electronicItem.Price = electronicPrice;
-                                                    items.Add(electronicItem);
-                                                }
-                                            }
-                                            break;
-                                        case "c":
-                                           Console.WriteLine("Enter the name of the clothes");
-                                            readResult = Console.ReadLine();
-                                            if (readResult != null)
-                                            {
-                                                string? clothingName = readResult;
-                                                Console.WriteLine("Enter the price of the clothes");
-                                                readResult = Console.ReadLine();
-                                                if (readResult != null)
-                                                {
-                                                    decimal clothingPrice = decimal.Parse(readResult);
-                                                    ClothingItem clothingItem = new ClothingItem();
-                                                    clothingItem.Id = items.Count + 1;
-                                                    clothingItem.Name = clothingName;
-                                                    clothingItem.Price = clothingPrice;
-                                                    items.Add(clothingItem);
-                                                }
-                                            }
-                                            break;
-                                    }
-                                }
-                                else
-                                {
-                                    validEntry = true;
-                                }
-                            }
-                        } while (validEntry == false);
+                            bool validEntry = false;
 
-                       
-                        do
-                        {
-                            Console.WriteLine("Enter a physical description of the pet (size, color, gender, weight, housebroken)");
-                            readResult = Console.ReadLine();
-                            if (readResult != null)
-                            {
-                                animalPhysicalDescription = readResult.ToLower();
-                                if (animalPhysicalDescription == "")
-                                {
-                                    animalPhysicalDescription = "tbd";
-                                }
-                            }
-                        } while (animalPhysicalDescription == "");
-
-                        // get a description of the pet's personality - animalPersonalityDescription can be blank.
-                        do
-                        {
-                            Console.WriteLine("Enter a description of the pet's personality (likes or dislikes, tricks, energy level)");
-                            readResult = Console.ReadLine();
-                            if (readResult != null)
-                            {
-                                animalPersonalityDescription = readResult.ToLower();
-                                if (animalPersonalityDescription == "")
-                                {
-                                    animalPersonalityDescription = "tbd";
-                                }
-                            }
-                        } while (animalPersonalityDescription == "");
-
-                        // get the pet's nickname. animalNickname can be blank.
-                        do
-                        {
-                            Console.WriteLine("Enter a nickname for the pet");
-                            readResult = Console.ReadLine();
-                            if (readResult != null)
-                            {
-                                animalNickname = readResult.ToLower();
-                                if (animalNickname == "")
-                                {
-                                    animalNickname = "tbd";
-                                }
-                            }
-                        } while (animalNickname == "");
-
-                        // store the pet information in the ourAnimals array (zero based)
-                        ourAnimals[petCount, 0] = "ID #: " + animalID;
-                        ourAnimals[petCount, 1] = "Species: " + animalSpecies;
-                        ourAnimals[petCount, 2] = "Age: " + animalAge;
-                        ourAnimals[petCount, 3] = "Nickname: " + animalNickname;
-                        ourAnimals[petCount, 4] = "Physical description: " + animalPhysicalDescription;
-                        ourAnimals[petCount, 5] = "Personality: " + animalPersonalityDescription;
-
-                        // increment petCount (the array is zero-based, so we increment the counter after adding to the array)
-                        petCount = petCount + 1;
-
-                        // check maxPet limit
-                        if (petCount < maxPets)
-                        {
-                            // another pet?
-                            Console.WriteLine("Do you want to enter info for another pet (y/n)");
                             do
                             {
+                                Console.WriteLine("\n\rEnter 'category' or 'cat' to begin a new entry");
+                                readResult = Console.ReadLine();
+                                string? input = readResult;
+                                if (readResult != null)
+                                {
+                                    input = readResult.ToLower();
+                                    if (input != "category" || input != "cat")
+                                    {
+                                        Console.WriteLine($"You entered: {input}.");
+                                        validEntry = false;
+                                    }
+                                    else
+                                    {
+                                        validEntry = true;
+                                    }
+                                }
+                            } while (validEntry == false);
+
+
+                            do
+                            {
+                                string? category;
+                                Console.WriteLine("Enter categoty\n- el(for electronic)\n- c(for clothes)\n - b(for books) or enter 'n' if not necessary");
                                 readResult = Console.ReadLine();
                                 if (readResult != null)
                                 {
-                                    anotherPet = readResult.ToLower();
+                                    category = readResult;
+                                    if (category != "n")
+                                    {
+                                        switch (category)
+                                        {
+                                            case "el":
+                                                Console.WriteLine("Enter the name of the electronic");
+                                                readResult = Console.ReadLine();
+                                                if (readResult != null)
+                                                {
+                                                    string? electronicName = readResult;
+                                                    Console.WriteLine("Enter the price of the electronic");
+                                                    readResult = Console.ReadLine();
+                                                    if (readResult != null)
+                                                    {
+                                                        decimal electronicPrice = decimal.Parse(readResult);
+                                                        ElectronicItem electronicItem = new ElectronicItem();
+                                                        electronicItem.Id = items.Count + 1;
+                                                        electronicItem.Name = electronicName;
+                                                        electronicItem.Price = electronicPrice;
+                                                        items.Add(electronicItem);
+                                                    }
+                                                }
+                                                break;
+                                            case "c":
+                                                Console.WriteLine("Enter the name of the clothes");
+                                                readResult = Console.ReadLine();
+                                                if (readResult != null)
+                                                {
+                                                    string? clothingName = readResult;
+                                                    Console.WriteLine("Enter the price of the clothes");
+                                                    readResult = Console.ReadLine();
+                                                    if (readResult != null)
+                                                    {
+                                                        decimal clothingPrice = decimal.Parse(readResult);
+                                                        ClothingItem clothingItem = new ClothingItem();
+                                                        clothingItem.Id = items.Count + 1;
+                                                        clothingItem.Name = clothingName;
+                                                        clothingItem.Price = clothingPrice;
+                                                        items.Add(clothingItem);
+                                                    }
+                                                }
+                                                break;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        validEntry = true;
+                                    }
                                 }
+                            } while (validEntry == false);
 
-                            } while (anotherPet != "y" && anotherPet != "n");
+
+
+
+                            if (items.Count < itemsMax)
+                            {
+
+                                // another item?
+                                Console.WriteLine("Do you want to enter info for another item (y/n)");
+                                do
+                                {
+                                    readResult = Console.ReadLine();
+                                    if (readResult != null)
+                                    {
+                                        addAnotherItem = readResult.ToLower();
+                                    }
+
+                                } while (addAnotherItem != "y" && addAnotherItem != "n");
+                            }
                         }
-                    }
 
-                    if (petCount >= maxPets)
-                    {
-                        Console.WriteLine("We have reached our limit on the number of pets that we can manage.");
+                        if (items.Count >= itemsMax)
+                        {
+                            Console.WriteLine("We have reached our limit on the number of items that we can manage.");
+                            Console.WriteLine("Press the Enter key to continue.");
+                            readResult = Console.ReadLine();
+                        }
+
+                        break;
+
+                    case 3:
+                        // Ensure animal ages and physical descriptions are complete
+                        Console.WriteLine("Challenge Project - please check back soon to see progress.");
                         Console.WriteLine("Press the Enter key to continue.");
                         readResult = Console.ReadLine();
-                    }
+                        break;
 
-                    break;
+                    case 4:
+                        // Ensure animal nicknames and personality descriptions are complete
+                        Console.WriteLine("Challenge Project - please check back soon to see progress.");
+                        Console.WriteLine("Press the Enter key to continue.");
+                        readResult = Console.ReadLine();
+                        break;
 
-                case "3":
-                    // Ensure animal ages and physical descriptions are complete
-                    Console.WriteLine("Challenge Project - please check back soon to see progress.");
-                    Console.WriteLine("Press the Enter key to continue.");
-                    readResult = Console.ReadLine();
-                    break;
+                    case 5:
+                        // Edit an animal's age");
+                        Console.WriteLine("UNDER CONSTRUCTION - please check back next month to see progress.");
+                        Console.WriteLine("Press the Enter key to continue.");
+                        readResult = Console.ReadLine();
+                        break;
 
-                case "4":
-                    // Ensure animal nicknames and personality descriptions are complete
-                    Console.WriteLine("Challenge Project - please check back soon to see progress.");
-                    Console.WriteLine("Press the Enter key to continue.");
-                    readResult = Console.ReadLine();
-                    break;
+                    case 6:
+                        // Edit an animal's personality description");
+                        Console.WriteLine("UNDER CONSTRUCTION - please check back next month to see progress.");
+                        Console.WriteLine("Press the Enter key to continue.");
+                        readResult = Console.ReadLine();
+                        break;
 
-                case "5":
-                    // Edit an animal’s age");
-                    Console.WriteLine("UNDER CONSTRUCTION - please check back next month to see progress.");
-                    Console.WriteLine("Press the Enter key to continue.");
-                    readResult = Console.ReadLine();
-                    break;
+                    case 7:
+                        // Display all cats with a specified characteristic
+                        Console.WriteLine("UNDER CONSTRUCTION - please check back next month to see progress.");
+                        Console.WriteLine("Press the Enter key to continue.");
+                        readResult = Console.ReadLine();
+                        break;
 
-                case "6":
-                    // Edit an animal’s personality description");
-                    Console.WriteLine("UNDER CONSTRUCTION - please check back next month to see progress.");
-                    Console.WriteLine("Press the Enter key to continue.");
-                    readResult = Console.ReadLine();
-                    break;
+                    case 8:
+                        // Display all dogs with a specified characteristic
+                        Console.WriteLine("UNDER CONSTRUCTION - please check back next month to see progress.");
+                        Console.WriteLine("Press the Enter key to continue.");
+                        readResult = Console.ReadLine();
+                        break;
 
-                case "7":
-                    // Display all cats with a specified characteristic
-                    Console.WriteLine("UNDER CONSTRUCTION - please check back next month to see progress.");
-                    Console.WriteLine("Press the Enter key to continue.");
-                    readResult = Console.ReadLine();
-                    break;
+                    default:
+                        break;
+                }
 
-                case "8":
-                    // Display all dogs with a specified characteristic
-                    Console.WriteLine("UNDER CONSTRUCTION - please check back next month to see progress.");
-                    Console.WriteLine("Press the Enter key to continue.");
-                    readResult = Console.ReadLine();
-                    break;
+            } while (menuSelection != -1);
 
-                default:
-                    break;
-            }
-
-        } while (menuSelection != "exit");
-
-    }
+        }while (menuSelection != -1);
+    }   
 }
+
 
 public interface IItem
 {
