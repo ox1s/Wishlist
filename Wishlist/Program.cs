@@ -14,6 +14,10 @@ class Program
         book.Price = 100;
         book.GetItemDetails();
         items.Add(book);
+        string menuSelection = "-1";
+        int itemsMax = int.MaxValue;
+        string? readResult = Console.ReadLine();
+
         do
         {
             // display the top-level menu options
@@ -32,18 +36,17 @@ class Program
             Console.WriteLine("Enter your selection number (or type Exit to exit the program)");
 
 
-            int itemsMax = int.MaxValue;
-            string? readResult = Console.ReadLine();
-            int menuSelection = -1;
-            if (readResult != null && int.TryParse(readResult, out menuSelection))
+            if (readResult != null)
             {
-                menuSelection = int.Parse(readResult.ToLower());
+                menuSelection = readResult.ToLower();
             }
+
+
             do
             {
                 switch (menuSelection)
                 {
-                    case 1:
+                    case "1":
                         foreach (var item in items)
                         {
                             item.GetItemDetails();
@@ -53,7 +56,7 @@ class Program
 
                         break;
 
-                    case 2:
+                    case "2":
                         string addAnotherItem = "y";
 
                         while (addAnotherItem == "y" && items.Count < itemsMax)
@@ -169,42 +172,42 @@ class Program
 
                         break;
 
-                    case 3:
+                    case "3":
                         // Ensure animal ages and physical descriptions are complete
                         Console.WriteLine("Challenge Project - please check back soon to see progress.");
                         Console.WriteLine("Press the Enter key to continue.");
                         readResult = Console.ReadLine();
                         break;
 
-                    case 4:
+                    case "4":
                         // Ensure animal nicknames and personality descriptions are complete
                         Console.WriteLine("Challenge Project - please check back soon to see progress.");
                         Console.WriteLine("Press the Enter key to continue.");
                         readResult = Console.ReadLine();
                         break;
 
-                    case 5:
+                    case "5":
                         // Edit an animal's age");
                         Console.WriteLine("UNDER CONSTRUCTION - please check back next month to see progress.");
                         Console.WriteLine("Press the Enter key to continue.");
                         readResult = Console.ReadLine();
                         break;
 
-                    case 6:
+                    case "6":
                         // Edit an animal's personality description");
                         Console.WriteLine("UNDER CONSTRUCTION - please check back next month to see progress.");
                         Console.WriteLine("Press the Enter key to continue.");
                         readResult = Console.ReadLine();
                         break;
 
-                    case 7:
+                    case "7":
                         // Display all cats with a specified characteristic
                         Console.WriteLine("UNDER CONSTRUCTION - please check back next month to see progress.");
                         Console.WriteLine("Press the Enter key to continue.");
                         readResult = Console.ReadLine();
                         break;
 
-                    case 8:
+                    case "8":
                         // Display all dogs with a specified characteristic
                         Console.WriteLine("UNDER CONSTRUCTION - please check back next month to see progress.");
                         Console.WriteLine("Press the Enter key to continue.");
@@ -215,10 +218,10 @@ class Program
                         break;
                 }
 
-            } while (menuSelection != -1);
+            } while (menuSelection != "-1");
 
-        }while (menuSelection != -1);
-    }   
+        } while (menuSelection != "exit");
+    }
 }
 
 
