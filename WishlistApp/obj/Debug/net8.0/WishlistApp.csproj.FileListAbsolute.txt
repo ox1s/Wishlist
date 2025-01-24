@@ -1,0 +1,15 @@
+H:\C#Learning\Wishlist\WishlistApp\bin\Debug\net8.0\WishlistApp.exe
+H:\C#Learning\Wishlist\WishlistApp\bin\Debug\net8.0\WishlistApp.deps.json
+H:\C#Learning\Wishlist\WishlistApp\bin\Debug\net8.0\WishlistApp.runtimeconfig.json
+H:\C#Learning\Wishlist\WishlistApp\bin\Debug\net8.0\WishlistApp.dll
+H:\C#Learning\Wishlist\WishlistApp\bin\Debug\net8.0\WishlistApp.pdb
+H:\C#Learning\Wishlist\WishlistApp\obj\Debug\net8.0\WishlistApp.GeneratedMSBuildEditorConfig.editorconfig
+H:\C#Learning\Wishlist\WishlistApp\obj\Debug\net8.0\WishlistApp.AssemblyInfoInputs.cache
+H:\C#Learning\Wishlist\WishlistApp\obj\Debug\net8.0\WishlistApp.AssemblyInfo.cs
+H:\C#Learning\Wishlist\WishlistApp\obj\Debug\net8.0\WishlistApp.csproj.CoreCompileInputs.cache
+H:\C#Learning\Wishlist\WishlistApp\obj\Debug\net8.0\WishlistApp.sourcelink.json
+H:\C#Learning\Wishlist\WishlistApp\obj\Debug\net8.0\WishlistApp.dll
+H:\C#Learning\Wishlist\WishlistApp\obj\Debug\net8.0\refint\WishlistApp.dll
+H:\C#Learning\Wishlist\WishlistApp\obj\Debug\net8.0\WishlistApp.pdb
+H:\C#Learning\Wishlist\WishlistApp\obj\Debug\net8.0\WishlistApp.genruntimeconfig.cache
+H:\C#Learning\Wishlist\WishlistApp\obj\Debug\net8.0\ref\WishlistApp.dll
