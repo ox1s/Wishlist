@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "h:\\C#Learning\\Wishlist\\Wishlist\\Wishlist.csproj": {}
+    "H:\\C#Learning\\Wishlist\\Wishlist\\Wishlist.csproj": {}
   },
   "projects": {
-    "h:\\C#Learning\\Wishlist\\Wishlist\\Wishlist.csproj": {
+    "H:\\C#Learning\\Wishlist\\Wishlist\\Wishlist.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "h:\\C#Learning\\Wishlist\\Wishlist\\Wishlist.csproj",
+        "projectUniqueName": "H:\\C#Learning\\Wishlist\\Wishlist\\Wishlist.csproj",
         "projectName": "Wishlist",
-        "projectPath": "h:\\C#Learning\\Wishlist\\Wishlist\\Wishlist.csproj",
+        "projectPath": "H:\\C#Learning\\Wishlist\\Wishlist\\Wishlist.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "h:\\C#Learning\\Wishlist\\Wishlist\\obj\\",
+        "outputPath": "H:\\C#Learning\\Wishlist\\Wishlist\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
