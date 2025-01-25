@@ -6,15 +6,15 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v8.0": {
-      "WishlistApp/1.0.0": {
+      "WishListApp/1.0.0": {
         "runtime": {
-          "WishlistApp.dll": {}
+          "WishListApp.dll": {}
         }
       }
     }
   },
   "libraries": {
-    "WishlistApp/1.0.0": {
+    "WishListApp/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

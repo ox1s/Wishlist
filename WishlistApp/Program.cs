@@ -1,5 +1,5 @@
 ﻿
-public interface IItem
+interface IItem
 {
     int Id { get; }
     string Name { get; }
@@ -71,6 +71,10 @@ class ElectronicItem : ItemWithCategory
     {
         Console.WriteLine($"{Id}. {Name}\n\tCategory: {Category}\n\tBrand: {Brand}\n\tModel: {Model}\n\tPrice: {Price}");
     }
+}
+interface IComand
+{
+    void Execute();
 }
 
 class Program
