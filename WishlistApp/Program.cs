@@ -1,4 +1,6 @@
 ﻿
+using System.Drawing;
+
 interface IItem
 {
     int Id { get; }
@@ -87,7 +89,47 @@ class Program
         string? readResult;
         List<Item> items = new List<Item>();
 
-        do
+        Console.OutputEncoding = System.Text.Encoding.UTF8;
+
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        Console.WriteLine("Welcome to the Wishlist app. Your main menu options are:");
+        Console.ResetColor();
+        Console.WriteLine("\nUse ⬆️  and ⬇️  to navigate and press the \u001b[32mEnter/Return\u001b[0m key to select");
+
+        ConsoleKeyInfo key;
+        int option = 1;
+        bool isSelected = false;
+        (int left, int top) = Console.GetCursorPosition();
+        string color = "✅  \u001b[32m";
+
+        Console.CursorVisible = false;
+
+        while (!isSelected)
+        {
+            Console.SetCursorPosition(left, top);
+
+            Console.WriteLine($"{(option == 1 ? color : "    ")} Option 1\u001b[0m: Add a new item to our list");
+            Console.WriteLine($"{(option == 2 ? color : "   ")} Option 2\u001b[0m: Make as purchased");
+            Console.WriteLine($"{(option == 3 ? color : "   ")} Option 3\u001b[0m: Set price to item");
+
+            key = Console.ReadKey(true);
+
+            switch (key.Key)
+            {
+                case ConsoleKey.DownArrow:
+                    option = (option == 3 ? 1 : option + 1);
+                    break;
+                case ConsoleKey.UpArrow:
+                    option = (option == 1 ? 3 : option - 1);
+                    break;
+                case ConsoleKey.Enter:
+                    isSelected = true;
+                    break;
+            }
+        }
+        Console.WriteLine($"\n{color}You selected option: {option}");
+
+        /* do
         {
             // display the top-level menu options
             Console.Clear();
@@ -316,6 +358,6 @@ class Program
             }
 
 
-        } while (menuSelection != "exit");
+        } while (menuSelection != "exit");*/
     }
 }
