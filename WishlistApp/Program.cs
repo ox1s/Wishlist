@@ -21,7 +21,7 @@ class Item : IItem
     }
     public virtual void GetItemDetails()
     {
-        Console.WriteLine($"{Id}. {Name} \nPrice: {Price}");
+        Console.WriteLine($"{Id}. {Name} \n\tPrice: {Price}");
     }
 
 }
@@ -74,21 +74,22 @@ class ElectronicItem : ItemWithCategory
         Console.WriteLine($"{Id}. {Name}\n\tCategory: {Category}\n\tBrand: {Brand}\n\tModel: {Model}\n\tPrice: {Price}");
     }
 }
-interface IComand
+/* interface IComand
 {
     void Execute();
 }
-
+ */
 class Program
 {
     static void Main(string[] args)
     {
 
-        string menuSelection = "";
         int itemsMax = int.MaxValue;
         string? readResult;
         List<Item> items = new List<Item>();
 
+
+        Console.Clear();
         Console.OutputEncoding = System.Text.Encoding.UTF8;
 
         Console.ForegroundColor = ConsoleColor.Cyan;
@@ -100,76 +101,61 @@ class Program
         int option = 1;
         bool isSelected = false;
         (int left, int top) = Console.GetCursorPosition();
-        string color = "✅  \u001b[32m";
+        string green = " ✅  \u001b[32m";
+        string red = " ❌  \u001b[31m";
 
-        Console.CursorVisible = false;
-
-        while (!isSelected)
+        do
         {
-            Console.SetCursorPosition(left, top);
-
-            Console.WriteLine($"{(option == 1 ? color : "    ")} Option 1\u001b[0m: Add a new item to our list");
-            Console.WriteLine($"{(option == 2 ? color : "   ")} Option 2\u001b[0m: Make as purchased");
-            Console.WriteLine($"{(option == 3 ? color : "   ")} Option 3\u001b[0m: Set price to item");
-
-            key = Console.ReadKey(true);
-
-            switch (key.Key)
+            Console.Clear();
+            while (!isSelected)
             {
-                case ConsoleKey.DownArrow:
-                    option = (option == 3 ? 1 : option + 1);
-                    break;
-                case ConsoleKey.UpArrow:
-                    option = (option == 1 ? 3 : option - 1);
-                    break;
-                case ConsoleKey.Enter:
-                    isSelected = true;
-                    break;
-            }
-        }
-        Console.WriteLine($"\n{color}You selected option: {option}");
+                Console.SetCursorPosition(left, top);
+                Console.CursorVisible = false;
+                Console.WriteLine($"{(option == 1 ? green : "     ")}1. Add a new item to our list\u001b[0m");
+                Console.WriteLine($"{(option == 2 ? green : "    ")}2. Make as purchased\u001b[0m");
+                Console.WriteLine($"{(option == 3 ? green : "    ")}3. Set price to item\u001b[0m");
+                Console.WriteLine($"{(option == 4 ? green : "    ")}4. List all of our items\u001b[0m");
+                Console.WriteLine($"{(option == 5 ? red : "    ")}Exit\u001b[0m");
 
-        /* do
-        {
-            // display the top-level menu options
+                key = Console.ReadKey(true);
+
+                switch (key.Key)
+                {
+                    case ConsoleKey.DownArrow:
+                        option = (option == 5 ? 1 : option + 1);
+                        break;
+                    case ConsoleKey.UpArrow:
+                        option = (option == 1 ? 5 : option - 1);
+                        break;
+                    case ConsoleKey.Enter:
+                        isSelected = true;
+                        break;
+                }
+            }
+            Console.WriteLine($"You selected option: {option}");
             Console.Clear();
 
-            Console.WriteLine("Welcome to the Wishlist app. Your main menu options are:");
-            Console.WriteLine(" 1. Add a new item to our list");
-            Console.WriteLine(" 2. Make as purchased");
-            Console.WriteLine(" 3. Set price to item");
-            Console.WriteLine(" 4. List all of our items");
-            Console.WriteLine();
-            Console.WriteLine("Enter your selection number (or type Exit to exit the program)");
+            Console.CursorVisible = true;
 
-            readResult = Console.ReadLine();
-            if (readResult != null)
-            {
-                menuSelection = readResult.ToLower();
-            }
-
-            switch (menuSelection)
+            switch (option)
             {
 
-
-                case "1":
+                case 1:
                     string addAnotherItem = "y";
-                    Console.WriteLine("Add another item?(y/n)");
+                    /* Console.WriteLine("Add another item?(y/n)");
                     readResult = Console.ReadLine();
+                    Console.Clear();
                     if (readResult != null)
                     {
                         addAnotherItem = readResult.ToLower();
-                    }
-
-
+                    } */
                     while (addAnotherItem == "y" && items.Count < itemsMax)
                     {
                         bool validEntry = false;
                         string? input = null;
-
                         do
                         {
-                            Console.WriteLine("\n\rEnter 'category' or 'cat' to select a item category or enter 'n' if this is not necessary");
+                            Console.WriteLine("\rEnter 'category' or 'cat' to select a item category or enter 'n' if this is not necessary");
                             readResult = Console.ReadLine();
                             input = readResult;
                             if (readResult != null)
@@ -177,6 +163,7 @@ class Program
                                 input = readResult.ToLower();
                                 if (input != "category" && input != "cat" && input != "n")
                                 {
+                                    Console.Clear();
                                     Console.WriteLine($"You entered: {input}.");
                                     validEntry = false;
                                 }
@@ -193,7 +180,8 @@ class Program
                             if (input != "n")
                             {
                                 string? category;
-                                Console.WriteLine("Enter categoty\n- el(for electronic)\n- c(for clothes)\n - b(for books)");
+                                Console.Clear();
+                                Console.WriteLine("Enter category\n\t - el(for electronic)\n\t - c(for clothes)\n\t - b(for books)");
                                 readResult = Console.ReadLine();
                                 if (readResult != null)
                                 {
@@ -203,6 +191,7 @@ class Program
                                         switch (category)
                                         {
                                             case "el":
+                                                Console.Clear();
                                                 Console.WriteLine("Enter the name of the electronic");
                                                 readResult = Console.ReadLine();
                                                 if (readResult != null)
@@ -212,18 +201,21 @@ class Program
                                                     string brand = "-";
                                                     if (electronicName != null)
                                                     {
-                                                        Console.WriteLine("Do you want to enter Model and Brand of the electronic?(y/n)");
+                                                        Console.Clear();
+                                                        Console.WriteLine($"Do you want to enter Model and Brand of the {electronicName}?(y/n)");
                                                         readResult = Console.ReadLine();
                                                         if (readResult != null)
                                                         {
                                                             string? answer = readResult;
                                                             if (answer == "y")
                                                             {
+                                                                Console.Clear();
                                                                 Console.WriteLine("Enter Model of the electronic");
                                                                 readResult = Console.ReadLine();
                                                                 if (readResult != null)
                                                                 {
                                                                     model = readResult;
+                                                                    Console.Clear();
                                                                     Console.WriteLine("Enter Brand of the electronic");
                                                                     readResult = Console.ReadLine();
                                                                     if (readResult != null)
@@ -234,19 +226,36 @@ class Program
                                                             }
 
                                                         }
-                                                        Console.WriteLine($"Enter the price of the {electronicName}");
-                                                        readResult = Console.ReadLine();
-                                                        if (decimal.TryParse(readResult, out decimal electronicPrice))
+                                                        do
                                                         {
-                                                            ElectronicItem electronicItem = new ElectronicItem(items.Count + 1, electronicName, electronicPrice, category, brand, model);
-                                                            items.Add(electronicItem);
-                                                            Console.WriteLine($"You entered: \ncategory: Electrionic \n\titem: {electronicName}\n\tprice: {electronicPrice}");
-                                                            validEntry = true;
-                                                        }
+                                                            Console.Clear();
+                                                            Console.WriteLine($"Enter the price of the {electronicName}");
+                                                            readResult = Console.ReadLine();
+
+                                                            if (decimal.TryParse(readResult, out decimal electronicPrice))
+                                                            {
+                                                                Console.WriteLine("Работает");
+                                                                ElectronicItem electronicItem = new ElectronicItem(items.Count + 1, electronicName, electronicPrice, category, brand, model);
+                                                                items.Add(electronicItem);
+                                                                Console.Clear();
+                                                                Console.WriteLine($"\u001b[34mYou entered:\u001b[0m");
+                                                                electronicItem.GetItemDetails();
+                                                                Console.ReadKey();
+                                                                validEntry = true;
+                                                            }
+                                                            else
+                                                            {
+                                                                Console.Clear();
+                                                                Console.WriteLine($"{red}Invalid entry!{green} Please try again.(Press Enter)\u001b[0m");
+                                                                readResult = Console.ReadLine();
+                                                                validEntry = false;
+                                                            }
+                                                        } while (!validEntry);
                                                     }
                                                 }
                                                 break;
                                             case "c":
+                                                Console.Clear();
                                                 Console.WriteLine("Enter the name of the clothes");
                                                 readResult = Console.ReadLine();
                                                 if (readResult != null)
@@ -254,13 +263,42 @@ class Program
                                                     string? clothingName = readResult;
                                                     if (clothingName != null)
                                                     {
-                                                        Console.WriteLine("Enter the price of the clothes");
+                                                        Console.Clear();
+                                                        Console.WriteLine($"Enter the price of the {clothingName}");
                                                         readResult = Console.ReadLine();
                                                         if (decimal.TryParse(readResult, out decimal clothingPrice))
                                                         {
                                                             ClothingItem clothingItem = new ClothingItem(items.Count + 1, clothingName, clothingPrice, category, "X", "blue");
                                                             items.Add(clothingItem);
-                                                            Console.WriteLine($"You entered: \ncategory: Clothing \n\titem: {clothingName}\n\t\tprice: {clothingPrice}$\nSize:\n\t\t{clothingItem.Size}\nColor:\n\t\t{clothingItem.Color}");
+                                                            Console.Clear();
+                                                            Console.WriteLine($"\u001b[34mYou entered:\u001b[0m");
+                                                            clothingItem.GetItemDetails();
+                                                            Console.ReadKey();
+                                                            validEntry = true;
+                                                        }
+                                                    }
+                                                }
+                                                break;
+                                            case "b":
+                                                Console.Clear();
+                                                Console.WriteLine("Enter the name of the book");
+                                                readResult = Console.ReadLine();
+                                                if (readResult != null)
+                                                {
+                                                    string? bookName = readResult;
+                                                    if (bookName != null)
+                                                    {
+                                                        Console.Clear();
+                                                        Console.WriteLine($"Enter the price of the {bookName}");
+                                                        readResult = Console.ReadLine();
+                                                        if (decimal.TryParse(readResult, out decimal bookPrice))
+                                                        {
+                                                            BookItem bookItem = new BookItem(items.Count + 1, bookName, bookPrice, category, "Author");
+                                                            items.Add(bookItem);
+                                                            Console.Clear();
+                                                            Console.WriteLine($"\u001b[34mYou entered:\u001b[0m");
+                                                            bookItem.GetItemDetails();
+                                                            Console.ReadKey();
                                                             validEntry = true;
                                                         }
                                                     }
@@ -276,6 +314,7 @@ class Program
                             }
                             else
                             {
+                                Console.Clear();
                                 Console.WriteLine("Enter the name of item");
                                 readResult = Console.ReadLine();
                                 if (readResult != null)
@@ -283,13 +322,17 @@ class Program
                                     string? itemName = readResult;
                                     if (itemName != null)
                                     {
+                                        Console.Clear();
                                         Console.WriteLine($"Enter the price of the {itemName}");
                                         readResult = Console.ReadLine();
                                         if (decimal.TryParse(readResult, out decimal itemPrice))
                                         {
                                             Item item = new Item(items.Count + 1, itemName, itemPrice);
                                             items.Add(item);
-                                            Console.WriteLine($"You entered: \ncategory: Clothing \n\titem: {itemName}\n\t\tprice: {itemPrice}$.");
+                                            Console.Clear();
+                                            Console.WriteLine($"\u001b[34mYou entered:\u001b[0m");
+                                            item.GetItemDetails();
+                                            Console.ReadKey();
                                             validEntry = true;
                                         }
                                     }
@@ -300,10 +343,10 @@ class Program
 
                         if (items.Count < itemsMax)
                         {
-                            // another item?
-                            Console.WriteLine("Do you want to enter info for another item (y/n)");
                             do
                             {
+                                Console.Clear();
+                                Console.WriteLine("Do you want to enter info for another item (y/n)");
                                 readResult = Console.ReadLine();
                                 if (readResult != null)
                                 {
@@ -311,53 +354,51 @@ class Program
                                 }
 
                             } while (addAnotherItem != "y" && addAnotherItem != "n");
+                            Console.Clear();
                         }
                     }
-
+                    if (addAnotherItem == "n")
+                    {
+                        Console.Clear();
+                        isSelected = false;
+                    }
                     if (items.Count >= itemsMax)
                     {
+                        Console.Clear();
                         Console.WriteLine("We have reached our limit on the number of items that we can manage.");
                         Console.WriteLine("Press the Enter key to continue.");
-                        readResult = Console.ReadLine();
+                        Console.ReadKey();
                     }
 
                     break;
-                case "2":
+                case 2:
                     // Logic for marking an item as purchased
                     Console.WriteLine("2");
                     Console.WriteLine("Press the Enter key to continue.");
-                    readResult = Console.ReadLine();
+                    Console.ReadKey();
+                    isSelected = false;
                     break;
-                case "3":
+                case 3:
                     // Logic for setting the price of an item
                     Console.WriteLine("3");
                     Console.WriteLine("Press the Enter key to continue.");
-                    readResult = Console.ReadLine();
+                    Console.ReadKey();
+                    isSelected = false;
                     break;
 
-
-
-                case "4":
+                case 4:
                     //4. List all of our items
                     foreach (var item in items)
                     {
                         item.GetItemDetails();
                     }
-                    Console.WriteLine("\n\rPress the Enter key to continue");
-                    readResult = Console.ReadLine();
-
-                    break;
-
-
-                default:
-                    if (menuSelection != "exit")
-                    {
-                        Console.WriteLine("Invalid selection. Please try again.");
-                    }
+                    Console.WriteLine("\n\rPress any key to continue");
+                    Console.ReadKey();
+                    isSelected = false;
                     break;
             }
 
 
-        } while (menuSelection != "exit");*/
+        } while (option != 5);
     }
 }
