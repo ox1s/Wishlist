@@ -88,33 +88,57 @@ class Program
         string? readResult;
         List<Item> items = new List<Item>();
 
-
-        Console.Clear();
+        //Console.BackgroundColor = ConsoleColor.White;
         Console.OutputEncoding = System.Text.Encoding.UTF8;
-
-        Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.WriteLine("Welcome to the Wishlist app. Your main menu options are:");
-        Console.ResetColor();
-        Console.WriteLine("\nUse ⬆️  and ⬇️  to navigate and press the \u001b[32mEnter/Return\u001b[0m key to select");
-
         ConsoleKeyInfo key;
         int option = 1;
         bool isSelected = false;
-        (int left, int top) = Console.GetCursorPosition();
-        string green = " ✅  \u001b[32m";
-        string red = " ❌  \u001b[31m";
+        string green = " \u001b[32m >  ";
+        string red = "\u001b[31m x  ";
 
         do
         {
             Console.Clear();
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            /* Console.WriteLine(@"
+ ╦ ╦┬┌─┐┬ ┬╦  ┬┌─┐┌┬┐
+ ║║║│└─┐├─┤║  │└─┐ │ 
+ ╚╩╝┴└─┘┴ ┴╩═╝┴└─┘ ┴ 
+  ");
+             Console.WriteLine(@"                                                         
+ ,--.   ,--.,--.       ,--.     ,--.   ,--.        ,--.   
+ |  |   |  |`--' ,---. |  ,---. |  |   `--' ,---.,-'  '-. 
+ |  |.'.|  |,--.(  .-' |  .-.  ||  |   ,--.(  .-''-.  .-' 
+ |   ,'.   ||  |.-'  `)|  | |  ||  '--.|  |.-'  `) |  |   
+ '--'   '--'`--'`----' `--' `--'`-----'`--'`----'  `--'   
+                                                          ");
+             Console.WriteLine(@" __    __ _     _       __ _     _   
+ / / /\ \ (_)___| |__   / /(_)___| |_ 
+ \ \/  \/ / / __| '_ \ / / | / __| __|
+  \  /\  /| \__ \ | | / /__| \__ \ |_ 
+   \/  \/ |_|___/_| |_\____/_|___/\__|
+                                      ");*/
+            Console.WriteLine(@"
+ ____      ____  _          __       _____      _          _    
+|_  _|    |_  _|(_)        [  |     |_   _|    (_)        / |_  
+  \ \  /\  / /  __   .--.   | |--.    | |      __   .--. `| |-' 
+   \ \/  \/ /  [  | ( (`\]  | .-. |   | |   _ [  | ( (`\] | |   
+    \  /\  /    | |  `'.'.  | | | |  _| |__/ | | |  `'.'. | |,  
+     \/  \/    [___][\__) )[___]|__]|________|[___][\__) )\__/  
+                                                                
+");
+            Console.ResetColor();
+            Console.WriteLine("\nUse up and down to navigate and press the \u001b[32mEnter/Return\u001b[0m key to select");
+            (int left, int top) = Console.GetCursorPosition();
+
             while (!isSelected)
             {
                 Console.SetCursorPosition(left, top);
                 Console.CursorVisible = false;
                 Console.WriteLine($"{(option == 1 ? green : "     ")}1. Add a new item to our list\u001b[0m");
-                Console.WriteLine($"{(option == 2 ? green : "    ")}2. Make as purchased\u001b[0m");
-                Console.WriteLine($"{(option == 3 ? green : "    ")}3. Set price to item\u001b[0m");
-                Console.WriteLine($"{(option == 4 ? green : "    ")}4. List all of our items\u001b[0m");
+                Console.WriteLine($"{(option == 2 ? green : "     ")}2. Make as purchased\u001b[0m");
+                Console.WriteLine($"{(option == 3 ? green : "     ")}3. Set price to item\u001b[0m");
+                Console.WriteLine($"{(option == 4 ? green : "     ")}4. List all of our items\u001b[0m");
                 Console.WriteLine($"{(option == 5 ? red : "    ")}Exit\u001b[0m");
 
                 key = Console.ReadKey(true);
@@ -132,9 +156,8 @@ class Program
                         break;
                 }
             }
-            Console.WriteLine($"You selected option: {option}");
+            
             Console.Clear();
-
             Console.CursorVisible = true;
 
             switch (option)
@@ -142,38 +165,27 @@ class Program
 
                 case 1:
                     string addAnotherItem = "y";
-                    /* Console.WriteLine("Add another item?(y/n)");
-                    readResult = Console.ReadLine();
-                    Console.Clear();
-                    if (readResult != null)
-                    {
-                        addAnotherItem = readResult.ToLower();
-                    } */
+                    
                     while (addAnotherItem == "y" && items.Count < itemsMax)
                     {
                         bool validEntry = false;
                         string? input = null;
                         do
                         {
-                            Console.WriteLine("\rEnter 'category' or 'cat' to select a item category or enter 'n' if this is not necessary");
+                            Console.WriteLine("\rPress Enter to select category of item or enter 'n' if this is not necessary");
                             readResult = Console.ReadLine();
-                            input = readResult;
-                            if (readResult != null)
+                            input = readResult.Trim().ToLower();
+                            if (input == "n" || input == "")
                             {
-                                input = readResult.ToLower();
-                                if (input != "category" && input != "cat" && input != "n")
-                                {
-                                    Console.Clear();
-                                    Console.WriteLine($"You entered: {input}.");
-                                    validEntry = false;
-                                }
-                                else
-                                {
-                                    validEntry = true;
-                                }
+                                validEntry = true;
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Console.WriteLine($"You entered: {input}.");
+                                validEntry = false;
                             }
                         } while (!validEntry);
-
 
                         do
                         {
@@ -247,7 +259,7 @@ class Program
                                                             {
                                                                 Console.Clear();
                                                                 Console.WriteLine($"{red}Invalid entry!{green} Please try again.(Press Enter)\u001b[0m");
-                                                                readResult = Console.ReadLine();
+                                                                Console.ReadKey();
                                                                 validEntry = false;
                                                             }
                                                         } while (!validEntry);
@@ -352,7 +364,6 @@ class Program
                                 {
                                     addAnotherItem = readResult.ToLower();
                                 }
-
                             } while (addAnotherItem != "y" && addAnotherItem != "n");
                             Console.Clear();
                         }
