@@ -7,6 +7,6 @@ class BookItem : Item
     }
     public override void GetItemDetails()
     {
-        Console.WriteLine($"{Id}. {Name}:\n\tCategory: Books\n\tAuthor: {Author}\n\tPrice: {Price}");
+        Console.WriteLine($"{Id}. {Name}:\n\tCategory: Books\n\tAuthor: {Author}\n\tPrice: {Price}\n\tIs Purchased: {(IsPurchased ? "Yes" : "No")}");
     }
 }

@@ -9,6 +9,6 @@ class ClothingItem : Item
     }
     public override void GetItemDetails()
     {
-        Console.WriteLine($"{Id}. {Name}:\n\tCategory: Clothing\n\tSize: {Size}\n\tColor: {Color}\n\tPrice: {Price}");
+        Console.WriteLine($"{Id}. {Name}:\n\tCategory: Clothing\n\tSize: {Size}\n\tColor: {Color}\n\tPrice: {Price}\n\tIs Purchased: {(IsPurchased ? "Yes" : "No")}");
     }
 }

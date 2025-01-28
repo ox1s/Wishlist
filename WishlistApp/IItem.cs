@@ -4,4 +4,5 @@ interface IItem
     string Name { get; }
     decimal Price { get; }
     void GetItemDetails();
+    void MarkAsPurchased();
 }
