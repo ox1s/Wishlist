@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 class Menu
 {
     string? readResult;
@@ -91,67 +93,19 @@ class Menu
 
         while (response == "y" && items.Count < itemsMax)
         {
-            string? input = null;
             do
             {
-                Console.WriteLine("\rPress Enter to select category of item or enter 'n' if this is not necessary");
-                readResult = Console.ReadLine();
-                input = readResult?.Trim().ToLower();
-                if (input == "n" || input == "")
-                {
-                    validEntry = true;
-                }
-                else
-                {
-                    Console.Clear();
-                    Console.WriteLine($"You entered: {input}.");
-                    validEntry = false;
-                }
-            } while (!validEntry);
-            do
-            {
-                string? category;
-                if (input != "n")
-                {
-                    Console.Clear();
-                    Console.WriteLine("Enter category\n\t - el(for electronic)\n\t - c(for clothes)\n\t - b(for books)");
-                    readResult = Console.ReadLine();
-                }
-                if (readResult != null)
-                {
-                    category = readResult?.Trim().ToLower();
-                    switch (category)
-                    {
-                        case "el":
-                            AddElectronicItem(items);
-                            break;
-                        case "c":
-                            AddClothingItem(items);
-                            break;
-                        case "b":
-                            AddBookItem(items);
-                            break;
-                        case "n":
-                            AddItemWithoutCategory(items);
-                            break;
-
-                        default:
-                            Console.WriteLine($"{red}Invalid entry!\u001b[0m Please try again. (Press Enter)");
-                            Console.ReadKey();
-                            validEntry = false;
-                            break;
-                    }
-
-                }
+                Console.Clear();
+                AddItemByCategory(items, GetItemCategory());
             } while (!validEntry);
 
 
             if (items.Count < itemsMax)
             {
-
                 Console.Clear();
                 Console.WriteLine("Do you want to enter info for another item (y/n)");
                 response = GetAddAnotherItemResponse();
+                Console.Clear();
                 if (response == "n")
                 {
                     Console.Clear();
@@ -169,10 +123,74 @@ class Menu
     }
     private string? GetItemCategory()
     {
-        return null;
+        string? input;
+        do
+        {
+            Console.Clear();
+            Console.WriteLine("\rPress Enter to select category of item or enter 'n' if this is not necessary");
+
+
+            readResult = Console.ReadLine();
+            input = readResult?.Trim().ToLower();
+
+            if (input == "n" || string.IsNullOrEmpty(input))
+            {
+                do
+                {
+                    if (string.IsNullOrEmpty(input))
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Enter category\n\t - el(for electronic)\n\t - c(for clothes)\n\t - b(for books)");
+                        readResult = Console.ReadLine()?.Trim().ToLower();
+                        if (readResult != "el" && readResult != "c" && readResult != "b")
+                        {
+                            Console.WriteLine($"You entered: {readResult}.");
+                            Console.WriteLine("Please try again(Press Enter).");
+                            Console.ReadKey();
+                            validEntry = false;
+                        }
+                        else
+                            validEntry = true;
+
+                    }
+                    else
+                        validEntry = true;
+                } while (!validEntry);
+            }
+            else
+            {
+                Console.WriteLine($"You entered: {input}.");
+                Console.WriteLine("Please try again(Press Enter).");
+                Console.ReadKey();
+                validEntry = false;
+            }
+        } while (!validEntry);
+        return input == "n" ? "n" : readResult?.Trim().ToLower();
     }
-    private void AddItemByCategory(List<Item> items, string category)
+    private void AddItemByCategory(List<IItem> items, string? category)
     {
+
+        switch (category)
+        {
+            case "el":
+                AddElectronicItem(items);
+                break;
+            case "c":
+                AddClothingItem(items);
+                break;
+            case "b":
+                AddBookItem(items);
+                break;
+            case "n":
+                AddItemWithoutCategory(items);
+                break;
+
+            default:
+                Console.WriteLine($"{red}Invalid entry!\u001b[0m \nPlease try again(Press Enter).");
+                Console.ReadKey();
+                validEntry = false;
+                break;
+        }
 
     }
     private string? GetAddAnotherItemResponse()

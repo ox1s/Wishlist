@@ -1,6 +1,12 @@
 class ItemManager
 {
     private IItemManagerStrategy _itemManagerStrategy;
+    public ItemManager()
+    { }
+    public ItemManager(IItemManagerStrategy strategy)
+    {
+        this._itemManagerStrategy = strategy;
+    }
 
     public void SetDisplayStrategy(IItemManagerStrategy strategy)
     {
