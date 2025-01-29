@@ -1,6 +1,3 @@
-using System.Runtime.CompilerServices;
-using Microsoft.VisualBasic;
-
 class Menu
 {
     string? readResult;
@@ -69,12 +66,8 @@ class Menu
 
                     break;
                 case 2:
-                    // Logic for marking an item as purchased
                     Console.CursorVisible = true;
                     MarkAsPurchased(items);
-                    //Console.WriteLine("Press the Enter key to continue.");
-                    //Console.ReadKey();
-                    //isSelected = false;
                     break;
                 case 3:
                     // Logic for setting the price of an item
@@ -85,12 +78,9 @@ class Menu
                     break;
 
                 case 4:
-                    //4. List all of our items
                     ListItems(items);
                     break;
             }
-
-
         } while (option != 5);
 
     }
@@ -295,7 +285,6 @@ class Menu
                     Console.WriteLine($"\u001b[34mYou entered:\u001b[0m");
                     itemManager.SwitchDisplayStrategy("detailed");
                     itemManager.DisplayItem(item);
-                    //item.GetItemDetails();
                     Console.ReadKey();
                     validEntry = true;
                 }
@@ -344,7 +333,6 @@ class Menu
                             Console.WriteLine($"\u001b[34mYou entered:\u001b[0m");
                             itemManager.SwitchDisplayStrategy("detailed");
                             itemManager.DisplayItem(bookItem);
-                            //bookItem.GetItemDetails();
                             Console.ReadKey();
                             validEntry = true;
                         }
@@ -397,17 +385,15 @@ class Menu
                         do
                         {
                             Console.Clear();
-                            Console.WriteLine($"Enter the price of the {electronicName}");
+                            Console.WriteLine($"Enter the price of the {electronicName} or enter 0 to cancel");
                             readResult = Console.ReadLine();
 
                             if (readResult != null && decimal.TryParse(readResult, out decimal electronicPrice))
                             {
-                                Console.WriteLine("Работает");
                                 ElectronicItem electronicItem = new ElectronicItem(items.Count + 1, electronicName, electronicPrice, brand, model);
                                 items.Add(electronicItem);
                                 Console.Clear();
                                 Console.WriteLine($"\u001b[34mYou entered:\u001b[0m");
-                                //electronicItem.GetItemDetails();
                                 itemManager.SwitchDisplayStrategy("detailed");
                                 itemManager.DisplayItem(electronicItem);
                                 Console.ReadKey();

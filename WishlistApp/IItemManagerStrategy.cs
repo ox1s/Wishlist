@@ -23,19 +23,19 @@ class DetailedDisplayStrategy : IItemManagerStrategy
     {
         if (item is BookItem book)
         {
-            Console.WriteLine($"{item.Id}. {item.Name}:\n\tCategory: Books\n\tAuthor: {book.Author}\n\tPrice: {item.Price}\n\tIs Purchased: {(item.IsPurchased ? "Yes" : "No")}");
+            Console.WriteLine($"{item.Id}. {item.Name}:\n\tCategory: Books\n\tAuthor: {book.Author}\n\tPrice: {item.Price} c.u.\n\tIs Purchased: {(item.IsPurchased ? "Yes" : "No")}");
         }
         else if (item is ElectronicItem electronic)
         {
-            Console.WriteLine($"{item.Id}. {item.Name}\n\tCategory: Electronic\n\tBrand: {electronic.Brand}\n\tModel: {electronic.Model}\n\tPrice: {item.Price}\n\tIs Purchased: {(item.IsPurchased ? "Yes" : "No")}");
+            Console.WriteLine($"{item.Id}. {item.Name}\n\tCategory: Electronic\n\tBrand: {electronic.Brand}\n\tModel: {electronic.Model}\n\tPrice: {item.Price} c.u.\n\tIs Purchased: {(item.IsPurchased ? "Yes" : "No")}");
         }
         else if (item is ClothingItem clothing)
         {
-            Console.WriteLine($"{item.Id}. {item.Name}\n\tCategory: Clothes\n\tSize: {clothing.Size}\n\tColor: {clothing.Color}\n\tPrice: {item.Price}\n\tIs Purchased: {(item.IsPurchased ? "Yes" : "No")}");
+            Console.WriteLine($"{item.Id}. {item.Name}\n\tCategory: Clothes\n\tSize: {clothing.Size}\n\tColor: {clothing.Color}\n\tPrice: {item.Price} c.u.\n\tIs Purchased: {(item.IsPurchased ? "Yes" : "No")}");
         }
         else
         {
-            Console.WriteLine($"{item.Id}. {item.Name} \n\tPrice: {item.Price}\n\tIs Purchased: {(item.IsPurchased ? "Yes" : "No")}");
+            Console.WriteLine($"{item.Id}. {item.Name} \n\tPrice: {item.Price} c.u.\n\tIs Purchased: {(item.IsPurchased ? "Yes" : "No")}");
         }
     }
     public void DisplayAllItems(List<IItem> items)

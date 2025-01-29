@@ -1,25 +1,27 @@
-using System;
-using System.Collections.Generic;
-
 class ItemManager
 {
     private IItemManagerStrategy _itemManagerStrategy;
 
     public void SetDisplayStrategy(IItemManagerStrategy strategy)
     {
-        _itemManagerStrategy = strategy;
+        this._itemManagerStrategy = strategy;
     }
 
     public void DisplayItem(IItem item)
     {
-        _itemManagerStrategy?.Display(item);
+        this._itemManagerStrategy.Display(item);
     }
 
     public void DisplayAllItems(List<IItem> items)
     {
-        _itemManagerStrategy?.DisplayAllItems(items);
+        if (_itemManagerStrategy == null)
+        {
+            Console.WriteLine("Display strategy is not set.");
+            return;
+        }
+        _itemManagerStrategy.DisplayAllItems(items);
     }
-    
+
     public void SwitchDisplayStrategy(string strategyType)
     {
         if (strategyType == "simple")
