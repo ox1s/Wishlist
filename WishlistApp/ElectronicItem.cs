@@ -7,8 +7,5 @@ class ElectronicItem : Item
         Brand = brand;
         Model = model;
     }
-    public override void GetItemDetails()
-    {
-        Console.WriteLine($"{Id}. {Name}\n\tCategory: Electronic\n\tBrand: {Brand}\n\tModel: {Model}\n\tPrice: {Price}\n\tIs Purchased: {(IsPurchased ? "Yes" : "No")}");
-    }
+    
 }

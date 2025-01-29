@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+using Microsoft.VisualBasic;
 
 class Menu
 {
@@ -11,12 +12,9 @@ class Menu
     //Console.BackgroundColor = ConsoleColor.White;
     ConsoleKeyInfo key;
     bool validEntry = false;
-
-
-    public void DisplayMenu(List<Item> items)
+    ItemManager itemManager = new ItemManager();
+    public void DisplayMenu(List<IItem> items)
     {
-
-
         do
         {
             Console.Clear();
@@ -97,7 +95,7 @@ class Menu
 
     }
 
-    public void AddItem(List<Item> items)
+    public void AddItem(List<IItem> items)
     {
         string? response = "y";
 
@@ -196,7 +194,7 @@ class Menu
         return readResult.ToLower();
     }
 
-    public void MarkAsPurchased(List<Item> items)
+    public void MarkAsPurchased(List<IItem> items)
     {
         // Логика для пометки предмета как купленного
         do
@@ -253,13 +251,11 @@ class Menu
         Console.ReadKey();
         isSelected = false;
     }
-    private void UpdatePurshaseStatus(List<Item> items)
+    private void UpdatePurshaseStatus(List<IItem> items)
     {
         Console.Clear();
-        foreach (var item in items)
-        {
-            Console.WriteLine($"{item.Id}. {item.Name} - isPurchased: {(item.IsPurchased ? "Yes" : "No")}");
-        }
+        itemManager.SwitchDisplayStrategy("simple");
+        itemManager.DisplayAllItems(items);
     }
 
     public void SetPrice(List<Item> items)
@@ -267,20 +263,18 @@ class Menu
         // Логика для изменения цены предмета
     }
 
-    public void ListItems(List<Item> items)
+    public void ListItems(List<IItem> items)
     {
         Console.Clear();
-        foreach (var item in items)
-        {
-            item.GetItemDetails();
-        }
+        itemManager.SwitchDisplayStrategy("detailed");
+        itemManager.DisplayAllItems(items);
         Console.WriteLine("\n\rPress any key to continue");
         Console.ReadKey();
         isSelected = false;
     }
 
 
-    private void AddItemWithoutCategory(List<Item> items)
+    private void AddItemWithoutCategory(List<IItem> items)
     {
         Console.Clear();
         Console.WriteLine("Enter the name of item");
@@ -299,7 +293,9 @@ class Menu
                     items.Add(item);
                     Console.Clear();
                     Console.WriteLine($"\u001b[34mYou entered:\u001b[0m");
-                    item.GetItemDetails();
+                    itemManager.SwitchDisplayStrategy("detailed");
+                    itemManager.DisplayItem(item);
+                    //item.GetItemDetails();
                     Console.ReadKey();
                     validEntry = true;
                 }
@@ -314,7 +310,7 @@ class Menu
         }
         else validEntry = false;
     }
-    private void AddBookItem(List<Item> items)
+    private void AddBookItem(List<IItem> items)
     {
         Console.Clear();
         Console.WriteLine("Enter the name of the book");
@@ -346,7 +342,9 @@ class Menu
                             items.Add(bookItem);
                             Console.Clear();
                             Console.WriteLine($"\u001b[34mYou entered:\u001b[0m");
-                            bookItem.GetItemDetails();
+                            itemManager.SwitchDisplayStrategy("detailed");
+                            itemManager.DisplayItem(bookItem);
+                            //bookItem.GetItemDetails();
                             Console.ReadKey();
                             validEntry = true;
                         }
@@ -357,7 +355,7 @@ class Menu
             }
         } while (!validEntry);
     }
-    private void AddElectronicItem(List<Item> items)
+    private void AddElectronicItem(List<IItem> items)
     {
         do
         {
@@ -409,7 +407,9 @@ class Menu
                                 items.Add(electronicItem);
                                 Console.Clear();
                                 Console.WriteLine($"\u001b[34mYou entered:\u001b[0m");
-                                electronicItem.GetItemDetails();
+                                //electronicItem.GetItemDetails();
+                                itemManager.SwitchDisplayStrategy("detailed");
+                                itemManager.DisplayItem(electronicItem);
                                 Console.ReadKey();
                                 validEntry = true;
                             }
@@ -434,7 +434,7 @@ class Menu
             }
         } while (!validEntry);
     }
-    private void AddClothingItem(List<Item> items)
+    private void AddClothingItem(List<IItem> items)
     {
         Console.Clear();
         Console.WriteLine("Enter the name of the clothes");
@@ -453,7 +453,9 @@ class Menu
                     items.Add(clothingItem);
                     Console.Clear();
                     Console.WriteLine($"\u001b[34mYou entered:\u001b[0m");
-                    clothingItem.GetItemDetails();
+                    itemManager.SwitchDisplayStrategy("detailed");
+                    itemManager.DisplayItem(clothingItem);
+                    //clothingItem.GetItemDetails();
                     Console.ReadKey();
                     validEntry = true;
                 }
