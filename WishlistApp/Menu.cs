@@ -61,11 +61,9 @@ class Menu
 
             switch (option)
             {
-
                 case 1:
                     Console.CursorVisible = true;
                     AddItem(items);
-
                     break;
                 case 2:
                     Console.CursorVisible = true;
@@ -78,7 +76,6 @@ class Menu
                     Console.ReadKey();
                     isSelected = false;
                     break;
-
                 case 4:
                     ListItems(items);
                     break;
@@ -86,7 +83,6 @@ class Menu
         } while (option != 5);
 
     }
-
     public void AddItem(List<IItem> items)
     {
         string? response = "y";
@@ -103,7 +99,6 @@ class Menu
             if (items.Count < itemsMax)
             {
                 Console.Clear();
-                Console.WriteLine("Do you want to enter info for another item (y/n)");
                 response = GetAddAnotherItemResponse();
                 Console.Clear();
                 if (response == "n")
@@ -169,7 +164,6 @@ class Menu
     }
     private void AddItemByCategory(List<IItem> items, string? category)
     {
-
         switch (category)
         {
             case "el":
@@ -184,21 +178,28 @@ class Menu
             case "n":
                 AddItemWithoutCategory(items);
                 break;
-
             default:
                 Console.WriteLine($"{red}Invalid entry!\u001b[0m \nPlease try again(Press Enter).");
                 Console.ReadKey();
                 validEntry = false;
                 break;
         }
-
     }
     private string? GetAddAnotherItemResponse()
     {
         do
         {
+            Console.WriteLine("Do you want to enter info for another item (y/n)");
             readResult = Console.ReadLine();
+            if (readResult != "y" && readResult != "n")
+            {
+                Console.WriteLine($"You entered: {readResult}.");
+                Console.WriteLine("Please try again(Press Enter).");
+                Console.ReadKey();
+            }
+            Console.Clear();
         } while (readResult != "y" && readResult != "n");
+
         return readResult.ToLower();
     }
 
@@ -209,7 +210,7 @@ class Menu
         {
             UpdatePurshaseStatus(items);
             Console.WriteLine("Enter the ID of the item you want to mark as purchased:");
-            string? readResult = Console.ReadLine();
+            readResult = Console.ReadLine();
             if (readResult != null)
             {
                 int id = -1;
@@ -229,29 +230,37 @@ class Menu
                         {
                             Console.WriteLine($"Item {item.Name} is already marked as purchased.");
                         }
+                        do
+                        {
+                            UpdatePurshaseStatus(items);
+                            Console.WriteLine("Do you want to mark another item as purchased? (y/n)");
+                            readResult = Console.ReadLine();
+                            if (readResult == null || readResult?.ToLower() == "n")
+                            {
+                                break;
+                            }
+                            else if (readResult?.ToLower() != "y")
+                            {
+                                Console.WriteLine("Invalid input. Please enter 'y' or 'n'.");
+                                Console.ReadKey();
+                                Console.Clear();
+                                readResult = null;
+                            }
+                        } while (string.IsNullOrEmpty(readResult) || readResult?.ToLower() != "y");
 
                     }
                     else
                     {
-                        Console.WriteLine($"Item with ID {id} not found.");
-                        Console.ReadKey();
+                        Console.WriteLine($"Item with ID {id} not found. Please try again.");
                         readResult = null;
+                        Console.ReadKey();
                     }
                 }
                 else
                 {
                     Console.WriteLine("Invalid ID. Please enter a valid ID.");
-                    Console.ReadKey();
                     readResult = null;
-                }
-            }
-            else
-            {
-                Console.WriteLine("Do you want to mark another item as purchased? (y/n)");
-                readResult = Console.ReadLine();
-                if (readResult != null && readResult.ToLower() == "n")
-                {
-                    break;
+                    Console.ReadKey();
                 }
             }
         } while (string.IsNullOrEmpty(readResult) || readResult.ToLower() == "y");
@@ -341,7 +350,7 @@ class Menu
                     {
                         author = author.Trim();
                         Console.Clear();
-                        Console.WriteLine($"Enter the price of the {bookName}");
+                        Console.WriteLine($"Enter the price of the {bookName} or enter 0 to cancel");
                         readResult = Console.ReadLine();
                         if (readResult != null && decimal.TryParse(readResult, out decimal bookPrice))
                         {
@@ -449,7 +458,7 @@ class Menu
             if (clothingName != null)
             {
                 Console.Clear();
-                Console.WriteLine($"Enter the price of the {clothingName}");
+                Console.WriteLine($"Enter the price of the {clothingName} or enter 0 to cancel");
                 readResult = Console.ReadLine();
                 if (readResult != null && decimal.TryParse(readResult, out decimal clothingPrice))
                 {
