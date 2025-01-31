@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "H:\\C#Learning\\Wishlist\\WishListApp\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{942D069D-9392-1E64-8B5D-F68226141768}|WishListApp.csproj|h:\\c#learning\\wishlist\\wishlistapp\\menu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{942D069D-9392-1E64-8B5D-F68226141768}|WishListApp.csproj|solutionrelative:menu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{942D069D-9392-1E64-8B5D-F68226141768}|WishListApp.csproj|h:\\c#learning\\wishlist\\wishlistapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{942D069D-9392-1E64-8B5D-F68226141768}|WishListApp.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -35,12 +39,25 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Menu.cs",
+              "DocumentMoniker": "H:\\C#Learning\\Wishlist\\WishListApp\\Menu.cs",
+              "RelativeDocumentMoniker": "Menu.cs",
+              "ToolTip": "H:\\C#Learning\\Wishlist\\WishListApp\\Menu.cs",
+              "RelativeToolTip": "Menu.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-31T17:24:02.532Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "H:\\C#Learning\\Wishlist\\WishListApp\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "H:\\C#Learning\\Wishlist\\WishListApp\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAEUAAAAAAAAAAAAYwFoAAAAKAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-27T12:20:17.809Z",
               "EditorCaption": ""
