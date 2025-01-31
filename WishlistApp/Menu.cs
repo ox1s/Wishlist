@@ -71,11 +71,8 @@ class Menu
                     MarkAsPurchased(items);
                     break;
                 case 3:
-                    // Logic for setting the price of an item
-                    Console.WriteLine("3");
-                    Console.WriteLine("Press the Enter key to continue.");
-                    Console.ReadKey();
-                    isSelected = false;
+                    Console.CursorVisible = true;
+                    SetPrice(items);
                     break;
                 case 4:
                     ListItems(items);
@@ -210,7 +207,7 @@ class Menu
         // Логика для пометки предмета как купленного
         do
         {
-            UpdatePurshaseStatus(items);
+            UpdatePurchaseStatus(items);
             if (items.Count == 0 || items.All(item => item.IsPurchased))
             {
                 Console.WriteLine("You don't have any items to purchase.");
@@ -235,7 +232,7 @@ class Menu
                             if (!item.IsPurchased)
                             {
                                 item.MarkAsPurchased();
-                                UpdatePurshaseStatus(items);
+                                UpdatePurchaseStatus(items);
                                 Console.WriteLine($"Item {item.Name} has been marked as purchased. Press Enter to continue.");
                                 Console.ReadKey();
                             }
@@ -249,13 +246,13 @@ class Menu
                             {
                                 string? response = GetAddAnotherItemResponse("Do you want to mark another item as purchased? (y/n)", () =>
                                 {
-                                    UpdatePurshaseStatus(items);
+                                    UpdatePurchaseStatus(items);
                                     return items;
                                 });
 
                                 if (response == "n")
                                 {
-                                    UpdatePurshaseStatus(items);
+                                    UpdatePurchaseStatus(items);
                                     break;
                                 }
                             }
@@ -285,7 +282,7 @@ class Menu
         Console.ReadKey();
         isSelected = false;
     }
-    private void UpdatePurshaseStatus(List<IItem> items)
+    private void UpdatePurchaseStatus(List<IItem> items)
     {
         Console.Clear();
         itemManager.SwitchDisplayStrategy("simple");
@@ -300,7 +297,6 @@ class Menu
 
     public void SetPrice(List<IItem> items)
     {
-        // Логика для изменения стоимости предмета
         do
         {
             UpdatePriceStatus(items);
@@ -330,12 +326,13 @@ class Menu
                             readResult = Console.ReadLine();
                             if (readResult != null && decimal.TryParse(readResult, out decimal itemPrice))
                             {
+
                                 item.ChangePrice(itemPrice);
+                                Console.Clear();
+                                UpdatePriceStatus(items);
                                 Console.WriteLine($"\u001b[34mYou entered:\u001b[0m");
                                 itemManager.SwitchDisplayStrategy("price");
                                 itemManager.DisplayItem(item);
-                                Console.WriteLine("Press any key to continue");
-                                Console.ReadKey();
                                 validEntry = true;
                             }
                             else
