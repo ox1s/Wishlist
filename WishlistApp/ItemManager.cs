@@ -1,6 +1,7 @@
 class ItemManager
 {
     private IItemManagerStrategy _itemManagerStrategy;
+
     public ItemManager()
     { }
     public ItemManager(IItemManagerStrategy strategy)
@@ -37,6 +38,10 @@ class ItemManager
         else if (strategyType == "detailed")
         {
             SetDisplayStrategy(new DetailedDisplayStrategy());
+        }
+        else if (strategyType == "price")
+        {
+            SetDisplayStrategy(new PriceDisplayStrategy());
         }
         else
         {

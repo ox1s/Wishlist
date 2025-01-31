@@ -17,6 +17,10 @@ class Item : IItem
     {
         IsPurchased = true;
     }
+    public void ChangePrice(decimal newPrice)
+    {
+        Price = newPrice;
+    }
 
 
 }

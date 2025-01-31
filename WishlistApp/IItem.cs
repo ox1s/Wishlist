@@ -6,4 +6,5 @@ interface IItem
     public bool IsPurchased { get; }
    
     void MarkAsPurchased();
+    void ChangePrice(decimal newPrice);
 }

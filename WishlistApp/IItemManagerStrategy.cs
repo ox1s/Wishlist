@@ -17,6 +17,20 @@ class SimpleDisplayStrategy : IItemManagerStrategy
         }
     }
 }
+class PriceDisplayStrategy : IItemManagerStrategy
+{
+    public void Display(IItem item)
+    {
+        Console.WriteLine($"{item.Id}. {item.Name} Price: {item.Price}");
+    }
+    public void DisplayAllItems(List<IItem> items)
+    {
+        foreach (var item in items)
+        {
+            Display(item);
+        }
+    }
+}
 class DetailedDisplayStrategy : IItemManagerStrategy
 {
     public void Display(IItem item)
