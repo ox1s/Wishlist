@@ -646,7 +646,12 @@ class Menu
                         {
                             size = readResult;
                             if (size == "XS" || size == "S" || size == "M" || size == "L" || size == "XL" || size == "XXL") validEntry = true;
-                            else validEntry = false;
+                            else 
+                            {
+                                Console.WriteLine($"{red}Invalid entry!\u001b[0m Please try again.(Press Enter)");
+                                Console.ReadKey();
+                                validEntry = false;
+                            }
                         }
                         else
                         {
