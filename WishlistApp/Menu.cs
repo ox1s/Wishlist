@@ -418,6 +418,7 @@ class Menu
                         Console.WriteLine($"\u001b[34mYou entered:\u001b[0m");
                         itemManager.SwitchDisplayStrategy("detailed");
                         itemManager.DisplayItem(item);
+                        Console.WriteLine("Press any key to continue");
                         Console.ReadKey();
                         validEntry = true;
                         break;
@@ -461,71 +462,84 @@ class Menu
     }
     private void AddBookItem(List<IItem> items)
     {
-        Console.Clear();
-        Console.WriteLine("Enter the name of the book");
-        readResult = Console.ReadLine();
         do
         {
+            Console.Clear();
+            Console.WriteLine("Enter the name of the book");
+
+            readResult = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(readResult))
             {
-                validEntry = true;
-
                 string bookName = readResult.Trim();
                 string? author = null;
 
+                
                 Console.Clear();
                 Console.WriteLine($"Enter the author of the {bookName}");
                 readResult = Console.ReadLine();
-                if (readResult != null)
+                if (!string.IsNullOrWhiteSpace(readResult))
                 {
-                    author = readResult;
-                    if (author != null)
+                    author = readResult.Trim();
+                    Console.Clear();
+
+                    string? response = GetAddAnotherItemResponse($"Do you want to add price to {bookName}? (y/n)");
+
+                    if (response == "n")
                     {
-                        author = author.Trim();
+                        BookItem bookItem = new BookItem(items.Count + 1, bookName, 0, author);
+                        items.Add(bookItem);
                         Console.Clear();
+                        Console.WriteLine($"\u001b[34mYou entered:\u001b[0m");
+                        itemManager.SwitchDisplayStrategy("detailed");
+                        itemManager.DisplayItem(bookItem);
+                        Console.WriteLine("Press any key to continue");
+                        Console.ReadKey();
+                        validEntry = true;
+                    }
+                    else
+                    {
                         do
                         {
-                            string? response = GetAddAnotherItemResponse($"Do you want to add price to {bookName}? (y/n)");
-                            if (response == "n")
+                            Console.Clear();
+                            Console.WriteLine($"Enter the price of the {bookName}");
+                            readResult = Console.ReadLine();
+                            if (readResult != null && decimal.TryParse(readResult, out decimal bookPrice))
                             {
-                                BookItem bookItem = new BookItem(items.Count + 1, bookName, 0, author);
+                                BookItem bookItem = new BookItem(items.Count + 1, bookName, bookPrice, author);
                                 items.Add(bookItem);
                                 Console.Clear();
                                 Console.WriteLine($"\u001b[34mYou entered:\u001b[0m");
                                 itemManager.SwitchDisplayStrategy("detailed");
                                 itemManager.DisplayItem(bookItem);
+                                Console.WriteLine("Press any key to continue");
                                 Console.ReadKey();
                                 validEntry = true;
                             }
                             else
                             {
-                                readResult = Console.ReadLine();
-                                if (readResult != null && decimal.TryParse(readResult, out decimal bookPrice))
-                                {
-                                    BookItem bookItem = new BookItem(items.Count + 1, bookName, bookPrice, author);
-                                    items.Add(bookItem);
-                                    Console.Clear();
-                                    Console.WriteLine($"\u001b[34mYou entered:\u001b[0m");
-                                    itemManager.SwitchDisplayStrategy("detailed");
-                                    itemManager.DisplayItem(bookItem);
-                                    Console.WriteLine("Press any key to continue");
-                                    Console.ReadKey();
-                                    validEntry = true;
-                                }
-                                else
-                                {
-                                    Console.Clear();
-                                    Console.WriteLine($"{red}Invalid entry!\u001b[0m Please try again.(Press Enter)");
-                                    Console.ReadKey();
-                                    validEntry = false;
-                                }
+                                Console.Clear();
+                                Console.WriteLine($"{red}Invalid entry!\u001b[0m Please try again.(Press Enter)");
+                                Console.ReadKey();
+                                validEntry = false;
                             }
                         } while (!validEntry);
-
                     }
 
                 }
-
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine($"{red}Invalid entry!\u001b[0m Please try again.(Press Enter)");
+                    Console.ReadKey();
+                    validEntry = false;
+                }
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine($"{red}Invalid entry!\u001b[0m Please try again.(Press Enter)");
+                Console.ReadKey();
+                validEntry = false;
             }
         } while (!validEntry);
     }
@@ -539,74 +553,100 @@ class Menu
             readResult = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(readResult))
             {
-                string? electronicName = readResult?.Trim();
+                string electronicName = readResult.Trim();
                 string model = "-";
                 string brand = "-";
-                if (electronicName != null)
+
+                Console.Clear();
+                string? response = GetAddAnotherItemResponse($"Do you want to enter Model and Brand of the {electronicName}?(y/n)");
+                if (response != "n")
                 {
-                    Console.Clear();
-                    string? response = GetAddAnotherItemResponse($"Do you want to enter Model and Brand of the {electronicName}?(y/n)");
-                    if (response != "n")
+                    do
                     {
                         Console.Clear();
                         Console.WriteLine("Enter Model of the electronic");
                         readResult = Console.ReadLine();
-                        if (readResult != null)
+                        if (!string.IsNullOrWhiteSpace(readResult))
                         {
-                            model = readResult;
-                            Console.Clear();
-                            Console.WriteLine("Enter Brand of the electronic");
-                            readResult = Console.ReadLine();
-                            if (readResult != null)
-                            {
-                                brand = readResult;
-                            }
-                        }
-                    }
-
-
-                    do
-                    {
-                        response = GetAddAnotherItemResponse($"Do you want to add price to {electronicName}? (y/n)");
-                        if (response == "n")
-                        {
-                            Item item = new Item(items.Count + 1, electronicName, 0);
-                            items.Add(item);
-                            Console.Clear();
-                            Console.WriteLine($"\u001b[34mYou entered:\u001b[0m");
-                            itemManager.SwitchDisplayStrategy("detailed");
-                            itemManager.DisplayItem(item);
-                            Console.ReadKey();
+                            model = readResult.Trim();
                             validEntry = true;
-                            break;
+                            do
+                            {
+                                Console.Clear();
+                                Console.WriteLine("Enter Brand of the electronic");
+                                readResult = Console.ReadLine();
+                                if (!string.IsNullOrWhiteSpace(readResult))
+                                {
+                                    brand = readResult;
+                                    validEntry = true;
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine($"{red}Invalid entry!\u001b[0m Please try again.(Press Enter)");
+                                    Console.ReadKey();
+                                    validEntry = false;
+                                }
+                            } while (!validEntry);
+
                         }
                         else
                         {
                             Console.Clear();
-                            Console.WriteLine($"Enter the price of the {electronicName}.");
-                            readResult = Console.ReadLine();
-                            if (readResult != null && decimal.TryParse(readResult, out decimal electronicPrice))
-                            {
-                                ElectronicItem electronicItem = new ElectronicItem(items.Count + 1, electronicName, electronicPrice, brand, model);
-                                items.Add(electronicItem);
-                                Console.Clear();
-                                Console.WriteLine($"\u001b[34mYou entered:\u001b[0m");
-                                itemManager.SwitchDisplayStrategy("detailed");
-                                itemManager.DisplayItem(electronicItem);
-                                Console.WriteLine("Press any key to continue");
-                                Console.ReadKey();
-                                validEntry = true;
-                            }
-                            else
-                            {
-                                Console.Clear();
-                                Console.WriteLine($"{red}Invalid entry!\u001b[0m Please try again.(Press Enter)");
-                                Console.ReadKey();
-                                validEntry = false;
-                            }
+                            Console.WriteLine($"{red}Invalid entry!\u001b[0m Please try again.(Press Enter)");
+                            Console.ReadKey();
+                            validEntry = false;
+                        }
+                    } while (!validEntry);
+
+                }
+
+
+
+                response = GetAddAnotherItemResponse($"Do you want to add price to {electronicName}? (y/n)");
+                if (response == "n")
+                {
+                    Item item = new Item(items.Count + 1, electronicName, 0);
+                    items.Add(item);
+                    Console.Clear();
+                    Console.WriteLine($"\u001b[34mYou entered:\u001b[0m");
+                    itemManager.SwitchDisplayStrategy("detailed");
+                    itemManager.DisplayItem(item);
+                    Console.WriteLine("Press any key to continue");
+                    Console.ReadKey();
+                    validEntry = true;
+                    break;
+                }
+                else
+                {
+                    do
+                    {
+                        Console.Clear();
+                        Console.WriteLine($"Enter the price of the {electronicName}.");
+                        readResult = Console.ReadLine();
+                        if (readResult != null && decimal.TryParse(readResult, out decimal electronicPrice))
+                        {
+                            ElectronicItem electronicItem = new ElectronicItem(items.Count + 1, electronicName, electronicPrice, brand, model);
+                            items.Add(electronicItem);
+                            Console.Clear();
+                            Console.WriteLine($"\u001b[34mYou entered:\u001b[0m");
+                            itemManager.SwitchDisplayStrategy("detailed");
+                            itemManager.DisplayItem(electronicItem);
+                            Console.WriteLine("Press any key to continue");
+                            Console.ReadKey();
+                            validEntry = true;
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            Console.WriteLine($"{red}Invalid entry!\u001b[0m Please try again.(Press Enter)");
+                            Console.ReadKey();
+                            validEntry = false;
                         }
                     } while (!validEntry);
                 }
+
+
             }
             else
             {
@@ -619,36 +659,41 @@ class Menu
     }
     private void AddClothingItem(List<IItem> items)
     {
-        Console.Clear();
-        Console.WriteLine("Enter the name of the clothes");
-        readResult = Console.ReadLine();
-        if (readResult != null)
+
+        do
         {
-            string? clothingName = readResult;
-            string size = "-";
-            string color = "-";
-            if (!string.IsNullOrWhiteSpace(clothingName))
+            Console.Clear();
+            Console.WriteLine("Enter the name of the clothes");
+
+            readResult = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(readResult))
             {
-                do
+                string clothingName = readResult.Trim();
+                string size = "-";
+                string color = "-";
+
+
+                Console.Clear();
+                string? response_1 = GetAddAnotherItemResponse($"Do you want to add size to {clothingName}? (y/n)");
+                if (response_1 == "n")
                 {
-                    Console.Clear();
-                    string? response = GetAddAnotherItemResponse($"Do you want to add size to {clothingName}? (y/n)");
-                    if (response == "n")
-                    {
-                        validEntry = true;
-                        break;
-                    }
+                    validEntry = true;
+                    break;
+                }
+                else
+                {
                     do
                     {
+                        Console.Clear();
                         Console.WriteLine("Enter the size of the clothes");
                         readResult = Console.ReadLine();
                         if (!string.IsNullOrWhiteSpace(readResult))
                         {
-                            size = readResult;
+                            size = readResult.Trim().ToUpper();
                             if (size == "XS" || size == "S" || size == "M" || size == "L" || size == "XL" || size == "XXL") validEntry = true;
-                            else 
+                            else
                             {
-                                Console.WriteLine($"{red}Invalid entry!\u001b[0m Please try again.(Press Enter)");
+                                Console.WriteLine($"{red}Invalid entry(You shoud enter XS, S, M, L, XL or XXL)!\u001b[0m Please try again.(Press Enter)");
                                 Console.ReadKey();
                                 validEntry = false;
                             }
@@ -661,63 +706,22 @@ class Menu
                             validEntry = false;
                         }
                     } while (!validEntry);
-                } while (!validEntry);
+                }
+
+                Console.Clear();
+                string? response_2 = GetAddAnotherItemResponse($"Do you want to add color to {clothingName}? (y/n)");
+                if (response_2 == "n")
+                {
+                    validEntry = true;
+                    break;
+                }
                 do
                 {
-                    Console.Clear();
-                    string? response = GetAddAnotherItemResponse($"Do you want to add color to {clothingName}? (y/n)");
-                    if (response == "n")
-                    {
-                        validEntry = true;
-                        break;
-                    }
-                    do
-                    {
-                        Console.WriteLine("Enter the color of the clothes");
-                        readResult = Console.ReadLine();
-                        if (!string.IsNullOrWhiteSpace(readResult))
-                        {
-                            color = readResult;
-                            validEntry = false;
-                        }
-                        else
-                        {
-                            Console.Clear();
-                            Console.WriteLine($"{red}Invalid entry!\u001b[0m Please try again.(Press Enter)");
-                            Console.ReadKey();
-                            validEntry = false;
-                        }
-                    } while (!validEntry);
-                } while (!validEntry);
-                do
-                {
-                    string? response = GetAddAnotherItemResponse($"Do you want to add price to {clothingName}? (y/n)");
-                    if (response == "n")
-                    {
-                        ClothingItem clothingItem = new ClothingItem(items.Count + 1, clothingName, 0, size, "blue");
-                        items.Add(clothingItem);
-                        Console.Clear();
-                        Console.WriteLine($"\u001b[34mYou entered:\u001b[0m");
-                        itemManager.SwitchDisplayStrategy("detailed");
-                        itemManager.DisplayItem(clothingItem);
-                        Console.WriteLine("Press any key to continue");
-                        Console.ReadKey();
-                        validEntry = true;
-                        break;
-                    }
-                    Console.Clear();
-                    Console.WriteLine($"Enter the price of the {clothingName}");
+                    Console.WriteLine("Enter the color of the clothes");
                     readResult = Console.ReadLine();
-                    if (readResult != null && decimal.TryParse(readResult, out decimal clothingPrice))
+                    if (!string.IsNullOrWhiteSpace(readResult))
                     {
-                        ClothingItem clothingItem = new ClothingItem(items.Count + 1, clothingName, clothingPrice, "X", "blue");
-                        items.Add(clothingItem);
-                        Console.Clear();
-                        Console.WriteLine($"\u001b[34mYou entered:\u001b[0m");
-                        itemManager.SwitchDisplayStrategy("detailed");
-                        itemManager.DisplayItem(clothingItem);
-                        Console.WriteLine("Press any key to continue");
-                        Console.ReadKey();
+                        color = readResult;
                         validEntry = true;
                     }
                     else
@@ -727,9 +731,61 @@ class Menu
                         Console.ReadKey();
                         validEntry = false;
                     }
-
                 } while (!validEntry);
+
+
+                string? response = GetAddAnotherItemResponse($"Do you want to add price to {clothingName}? (y/n)");
+                if (response == "n")
+                {
+                    ClothingItem clothingItem = new ClothingItem(items.Count + 1, clothingName, 0, size, color);
+                    items.Add(clothingItem);
+                    Console.Clear();
+                    Console.WriteLine($"\u001b[34mYou entered:\u001b[0m");
+                    itemManager.SwitchDisplayStrategy("detailed");
+                    itemManager.DisplayItem(clothingItem);
+                    Console.WriteLine("Press any key to continue");
+                    Console.ReadKey();
+                    validEntry = true;
+                    break;
+                }
+                else
+                {
+                    do
+                    {
+                        Console.Clear();
+                        Console.WriteLine($"Enter the price of the {clothingName}");
+                        readResult = Console.ReadLine();
+                        if (readResult != null && decimal.TryParse(readResult, out decimal clothingPrice))
+                        {
+                            ClothingItem clothingItem = new ClothingItem(items.Count + 1, clothingName, clothingPrice, size, color);
+                            items.Add(clothingItem);
+                            Console.Clear();
+                            Console.WriteLine($"\u001b[34mYou entered:\u001b[0m");
+                            itemManager.SwitchDisplayStrategy("detailed");
+                            itemManager.DisplayItem(clothingItem);
+                            Console.WriteLine("Press any key to continue");
+                            Console.ReadKey();
+                            validEntry = true;
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            Console.WriteLine($"{red}Invalid entry!\u001b[0m Please try again.(Press Enter)");
+                            Console.ReadKey();
+                            validEntry = false;
+                        }
+                    } while (!validEntry);
+                }
+
+
             }
-        }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine($"{red}Invalid entry!\u001b[0m Please try again.(Press Enter)");
+                Console.ReadKey();
+                validEntry = false;
+            }
+        } while (!validEntry);
     }
 }
