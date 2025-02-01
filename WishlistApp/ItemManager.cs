@@ -42,6 +42,10 @@ class ItemManager
         {
             SetDisplayStrategy(new PriceDisplayStrategy());
         }
+        else if (strategyType == "input")
+        {
+            SetDisplayStrategy(new DisplayStrategyWithoutPurсhase());
+        }
         else
         {
             Console.WriteLine("Invalid strategy type. Defaulting to SimpleDisplayStrategy.");
