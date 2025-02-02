@@ -45,7 +45,7 @@ class DisplayStrategyWithoutPurсhase : IItemManagerStrategy
         }
         else if (item is ClothingItem clothing)
         {
-            Console.WriteLine($"{item.Id}. {item.Name}:\n\tCategory: Clothes{(clothing.Size != "-" ? $"\n\tSize: {clothing.Size}" : "")}{(clothing.Color != "-" ? $"\n\t\n\tColor: {clothing.Color}" : "")}{(item.Price != 0 ? $"\n\tPrice: {item.Price} c.u." : "")}");
+            Console.WriteLine($"{item.Id}. {item.Name}:\n\tCategory: Clothes{(clothing.Size != "-" ? $"\n\tSize: {clothing.Size}" : "")}{(clothing.Color != "-" ? $"\n\tColor: {clothing.Color}" : "")}{(item.Price != 0 ? $"\n\tPrice: {item.Price} c.u." : "")}");
         }
         else
         {
