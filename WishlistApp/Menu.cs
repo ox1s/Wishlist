@@ -97,7 +97,7 @@ class Menu
 
             if (items.Count < itemsMax)
             {
-                response = GetAddAnotherItemResponse("Do you want to enter info for another item (y/n)");
+                response = GetResponse("Do you want to enter info for another item (y/n)");
                 Console.Clear();
                 if (response == "n")
                 {
@@ -183,7 +183,7 @@ class Menu
                 break;
         }
     }
-    private string? GetAddAnotherItemResponse(string question, Func<List<IItem>>? title = null)
+    private string? GetResponse(string question, Func<List<IItem>>? title = null)
     {
         do
         {
@@ -194,7 +194,7 @@ class Menu
             if (readResult != "y" && readResult != "n")
             {
                 Console.WriteLine($"You entered: {readResult}.");
-                Console.WriteLine("Invalid input. Please try again(Press Enter).");
+                Console.WriteLine("Invalid input. You have to write 'y' or 'n'. Please try again(Press Enter).");
                 Console.ReadKey();
             }
             Console.Clear();
@@ -204,24 +204,27 @@ class Menu
     }
     public void MarkAsPurchased(List<IItem> items)
     {
-        // Логика для пометки предмета как купленного
         do
         {
-            UpdatePurchaseStatus(items);
+
             if (items.Count == 0 || items.All(item => item.IsPurchased))
             {
+                Console.Clear();
+                UpdatePurchaseStatus(items);
                 Console.WriteLine("You don't have any items to purchase.");
                 break;
             }
             else
             {
+                Console.Clear();
+                UpdatePurchaseStatus(items);
                 Console.WriteLine("Enter the ID of the item you want to mark as or press Enter to cancel:");
                 readResult = Console.ReadLine();
                 if (!string.IsNullOrWhiteSpace(readResult))
                 {
-                    decimal id = -1;
+                    decimal id = 0;
                     decimal.TryParse(readResult, out id);
-                    if (id != -1)
+                    if (id != 0)
                     {
                         var item = items.Find(i => i.Id == id);
                         if (item != null)
@@ -232,29 +235,12 @@ class Menu
                                 UpdatePurchaseStatus(items);
                                 Console.WriteLine($"Item {item.Name} has been marked as purchased. Press Enter to continue.");
                                 Console.ReadKey();
+                                readResult = null;
                             }
                             else
                             {
                                 Console.WriteLine($"Item {item.Name} is already marked as purchased. Press Enter to continue.");
                                 Console.ReadKey();
-                            }
-
-                            if (!items.All(item => item.IsPurchased))
-                            {
-                                string? response = GetAddAnotherItemResponse("Do you want to mark another item as purchased? (y/n)", () =>
-                                {
-                                    UpdatePurchaseStatus(items);
-                                    return items;
-                                });
-
-                                if (response == "n")
-                                {
-                                    UpdatePurchaseStatus(items);
-                                    break;
-                                }
-                            }
-                            else
-                            {
                                 readResult = null;
                             }
 
@@ -278,7 +264,7 @@ class Menu
                     break;
                 }
             }
-        } while (string.IsNullOrEmpty(readResult) || readResult?.ToLower() == "y");
+        } while (string.IsNullOrEmpty(readResult));
         Console.WriteLine("Press any key to continue");
         Console.ReadKey();
         isSelected = false;
@@ -299,27 +285,32 @@ class Menu
     {
         do
         {
-            UpdatePriceStatus(items);
             if (items.Count == 0)
             {
+                Console.Clear();
+                UpdatePriceStatus(items);
                 Console.WriteLine("You don't have any items to set price.");
                 break;
             }
             else
             {
+                Console.Clear();
+                UpdatePriceStatus(items);
                 Console.WriteLine("Enter the ID of the product whose price you want to change or press Enter to cancel:");
                 readResult = Console.ReadLine();
                 if (!string.IsNullOrWhiteSpace(readResult))
                 {
-                    decimal id = -1;
+                    decimal id = 0;
                     decimal.TryParse(readResult, out id);
-                    if (id != -1)
+                    if (id != 0)
                     {
                         var item = items.Find(i => i.Id == id);
                         if (item != null)
                         {
                             do
                             {
+                                Console.Clear();
+                                UpdatePriceStatus(items);
                                 Console.WriteLine($"Enter the price of the {item.Name}");
                                 readResult = Console.ReadLine();
                                 if (readResult != null && decimal.TryParse(readResult, out decimal itemPrice) && itemPrice > 0)
@@ -328,38 +319,16 @@ class Menu
                                     item.ChangePrice(itemPrice);
                                     Console.Clear();
                                     UpdatePriceStatus(items);
-                                    Console.WriteLine($"\u001b[34mYou entered:\u001b[0m");
-                                    itemManager.SwitchDisplayStrategy("price");
-                                    itemManager.DisplayItem(item);
                                     validEntry = true;
+                                    readResult = null;
                                 }
                                 else
                                 {
                                     Console.Clear();
-                                    Console.WriteLine($"{red}Invalid entry!\u001b[0m Please try again.(Press Enter)");
-                                    Console.ReadKey();
-                                    validEntry = false;
+                                    UpdatePriceStatus(items);
+                                    InvalidEntry();
                                 }
                             } while (!validEntry);
-
-                            if (!items.All(item => item.IsPurchased))
-                            {
-                                string? response = GetAddAnotherItemResponse("Do you want to change another item? (y/n)", () =>
-                                {
-                                    UpdatePriceStatus(items);
-                                    return items;
-                                });
-
-                                if (response == "n")
-                                {
-                                    UpdatePriceStatus(items);
-                                    break;
-                                }
-                            }
-                            else
-                            {
-                                readResult = null;
-                            }
 
                         }
                         else
@@ -381,7 +350,7 @@ class Menu
                     break;
                 }
             }
-        } while (string.IsNullOrEmpty(readResult) || readResult?.ToLower() == "y");
+        } while (string.IsNullOrEmpty(readResult));
         Console.WriteLine("Press any key to continue");
         Console.ReadKey();
         isSelected = false;
@@ -398,11 +367,10 @@ class Menu
             itemManager.SwitchDisplayStrategy("detailed");
             itemManager.DisplayAllItems(items);
         }
-        Console.WriteLine("\n\rPress any key to continue");
+        Console.WriteLine("Press any key to continue");
         Console.ReadKey();
         isSelected = false;
     }
-
     public void InvalidEntry()
     {
         Console.WriteLine($"{red}Invalid entry!\u001b[0m Please try again.(Press Enter)");
@@ -422,12 +390,40 @@ class Menu
         {
             Console.Clear();
             Console.WriteLine($"Enter the name of the {(itemType == null ? "" : $"{itemType} ")}item");
-            
 
             readResult = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(readResult))
             {
                 string itemName = readResult.Trim();
+                var existingItem = items.Find(i => i.Name == itemName);
+                do
+                {
+                    if (existingItem != null && items.Contains(existingItem))
+                    {
+                        response = GetResponse($"Item with name '{itemName}' already exists. You want to change name? (y/n)");
+                        if (response != "n")
+                        {
+                            do
+                            {
+                                Console.Clear();
+                                Console.WriteLine("Enter another name for the item");
+                                readResult = Console.ReadLine();
+                                if (!string.IsNullOrWhiteSpace(readResult))
+                                {
+                                    itemName = readResult.Trim();
+                                    existingItem = items.Find(i => i.Name == itemName);
+                                    validEntry = true;
+                                    if (existingItem != null && items.Contains(existingItem))
+                                        validEntry = false;
+                                }
+                                else
+                                {
+                                    InvalidEntry();
+                                }
+                            } while (!validEntry);
+                        }
+                    }
+                } while (!validEntry);
 
                 do
                 {
@@ -454,13 +450,13 @@ class Menu
                     else if (itemType == "clothing")
                     {
                         Console.Clear();
-                        response = GetAddAnotherItemResponse($"Do you want to add size to {itemName}? (y/n)");
+                        response = GetResponse($"Do you want to add size to {itemName}? (y/n)");
                         if (response != "n")
                         {
                             do
                             {
                                 Console.Clear();
-                                Console.WriteLine("Enter the size of the clothes(You shoud enter XS, S, M, L, XL or XXL)");
+                                Console.WriteLine("Enter the size of the clothes(You should enter XS, S, M, L, XL or XXL)");
                                 readResult = Console.ReadLine();
                                 if (!string.IsNullOrWhiteSpace(readResult))
                                 {
@@ -478,7 +474,7 @@ class Menu
                             } while (!validEntry);
                         }
                         Console.Clear();
-                        response = GetAddAnotherItemResponse($"Do you want to add color to {itemName}? (y/n)");
+                        response = GetResponse($"Do you want to add color to {itemName}? (y/n)");
                         if (response != "n")
                         {
                             do
@@ -503,7 +499,7 @@ class Menu
                     else if (itemType == "electronic")
                     {
                         Console.Clear();
-                        response = GetAddAnotherItemResponse($"Do you want to enter Model and Brand of the {itemName}?(y/n)");
+                        response = GetResponse($"Do you want to enter Model and Brand of the {itemName}?(y/n)");
                         if (response != "n")
                         {
                             do
@@ -543,7 +539,7 @@ class Menu
 
 
                     IItem newItem;
-                    response = GetAddAnotherItemResponse($"Do you want to add price to {itemName}? (y/n)");
+                    response = GetResponse($"Do you want to add price to {itemName}? (y/n)");
                     if (response == "n")
                     {
                         if (itemType == "clothing")
@@ -624,5 +620,5 @@ class Menu
         } while (!validEntry);
     }
 
-    
+
 }

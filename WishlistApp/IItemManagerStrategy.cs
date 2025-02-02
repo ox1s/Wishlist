@@ -41,7 +41,7 @@ class DisplayStrategyWithoutPurсhase : IItemManagerStrategy
         }
         else if (item is ElectronicItem electronic)
         {
-            Console.WriteLine($"{item.Id}. {item.Name}:\n\tCategory: Electronic {electronic.Brand} {(electronic.Brand != "-" ? $"\n\tBrand: {electronic.Brand}" : "")}{(electronic.Brand != "-" ? $"\n\tModel: {electronic.Model}" : "")}{(item.Price != 0 ? $"\n\tPrice: {item.Price} c.u." : "")}");
+            Console.WriteLine($"{item.Id}. {item.Name}:\n\tCategory: Electronic{(electronic.Brand != "-" ? $"\n\tBrand: {electronic.Brand}" : "")}{(electronic.Brand != "-" ? $"\n\tModel: {electronic.Model}" : "")}{(item.Price != 0 ? $"\n\tPrice: {item.Price} c.u." : "")}");
         }
         else if (item is ClothingItem clothing)
         {
