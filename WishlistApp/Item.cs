@@ -2,8 +2,8 @@ class Item : IItem
 {
     public int Id { get; }
     public string Name { get; }
-    public decimal Price { get; set; }
-    public bool IsPurchased { get; set; }
+    public decimal Price { get; private set; }
+    public bool IsPurchased { get; private set; }
     public Item(int id, string name, decimal price, bool isPurchased = false)
     {
         Id = id;
