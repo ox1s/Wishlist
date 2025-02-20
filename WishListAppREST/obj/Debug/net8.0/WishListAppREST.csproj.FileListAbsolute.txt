@@ -24,3 +24,9 @@ H:\C#Learning\Wishlist\WishListAppREST\obj\Debug\net8.0\refint\WishListAppREST.d
 H:\C#Learning\Wishlist\WishListAppREST\obj\Debug\net8.0\WishListAppREST.pdb
 H:\C#Learning\Wishlist\WishListAppREST\obj\Debug\net8.0\WishListAppREST.genruntimeconfig.cache
 H:\C#Learning\Wishlist\WishListAppREST\obj\Debug\net8.0\ref\WishListAppREST.dll
+H:\C#Learning\Wishlist\WishListAppREST\bin\Debug\net8.0\Microsoft.OpenApi.dll
+H:\C#Learning\Wishlist\WishListAppREST\bin\Debug\net8.0\MinimalApis.Extensions.dll
+H:\C#Learning\Wishlist\WishListAppREST\bin\Debug\net8.0\MiniValidation.dll
+H:\C#Learning\Wishlist\WishListAppREST\obj\Debug\net8.0\WishListAppREST.csproj.AssemblyReference.cache
+H:\C#Learning\Wishlist\WishListAppREST\obj\Debug\net8.0\WishListAppREST.MvcApplicationPartsAssemblyInfo.cs
+H:\C#Learning\Wishlist\WishListAppREST\obj\Debug\net8.0\WishList.1E24538A.Up2Date
